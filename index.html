@@ -3,9 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Will you be my valentines</title>
+    <title>Will You Be My Valentine?</title>
+    <link rel="stylesheet" href="main.css">
 </head>
 <body>
-    <h1>Will you be my valentines</h1>
+
+    <!-- Music -->
+    <audio id="happyMusic" src="happy.mp3" loop></audio>
+    <audio id="sadMusic" src="sad.mp3" loop></audio>
+    <audio id="loveMusic" src="love.mp3" loop></audio>
+
+    <div class="container">
+        <h1>Will you be my Valentine?</h1>
+
+        <img id="mainImage" src="valentine.png" alt="Valentine">
+
+        <div class="buttons">
+            <button id="yesBtn">Yes</button>
+            <button id="noBtn">No</button>
+        </div>
+
+        <p id="warning" class="hidden">Are you sure?</p>
+    </div>
+
+    <script>
+        const yesBtn = document.getElementById("yesBtn");
+        const noBtn = document.getElementById("noBtn");
+        const warning = document.getElementById("warning");
+        const image = document.getElementById("mainImage");
+
+        const happyMusic = document.getElementById("happyMusic");
+        const sadMusic = document.getElementById("sadMusic");
+        const loveMusic = document.getElementById("loveMusic");
+
+        let dodgeCount = 0;
+        const maxDodges = 10;
+
+        document.body.addEventListener("click", () => {
+            sasMusic.play();
+        }, { once: true });
+
+        noBtn.addEventListener("mouseover", () => {
+            if (dodgeCount < maxDodges) {
+                dodgeCount++;
+                const x = Math.random() * 240 - 120;
+                const y = Math.random() * 180 - 90;
+                noBtn.style.transform = `translate(${x}px, ${y}px)`;
+            }
+        });
+
+        noBtn.addEventListener("click", () => {
+            if (dodgeCount >= maxDodges) {
+                sadMusic.play();
+                warning.classList.remove("hidden");
+                image.src = "crying.png";
+
+                setTimeout(() => {
+                    noBtn.style.display = "none";
+                    warning.textContent = "Only one choice left.";
+                }, 800);
+            }
+        });
+
+        yesBtn.addEventListener("click", () => {
+            happyMusic.pause();
+            sadMusic.pause();
+            loveMusic.play();
+
+            setTimeout(() => {
+                window.location.href = "iterinary.html";
+            }, 1200);
+        });
+    </script>
+
 </body>
 </html>
